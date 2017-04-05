@@ -4,7 +4,7 @@ import numpy as np
 import os
 
 def store_raw_images():
-	neg_image_links = 'http://image-net.org/api/text/imagenet.synset.geturls?wnid=n01861778'
+	neg_image_links = 'http://image-net.org/api/text/imagenet.synset.geturls?wnid=n04116512'
 	neg_image_urls = urlopen(neg_image_links).read()
 
 	dir = 'neg'
@@ -17,7 +17,7 @@ def store_raw_images():
 		try:
 			if(url.find('.jpg') == len(url)- 5):
 				print(url)
-				f = urlopen(url)		
+				f = urlopen(url, timeout = 5)		
 				with open(dir + '/' + str(pic_num) + '.jpg', "wb") as local_file:
 					local_file.write(f.read())
 			if os.path.isfile(dir + '/'+ str(pic_num) +'.jpg'):
@@ -27,5 +27,6 @@ def store_raw_images():
 			pic_num += 1
 		except Exception as e:
 			print(str(e))
+			pic_num -= 1
 
 store_raw_images()
